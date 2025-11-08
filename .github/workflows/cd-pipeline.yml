@@ -39,10 +39,12 @@ jobs:
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'pwd && find . | grep deploy.sh'
 
+      - name: find file
+        run: |                   
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            'bash "$(find /home/ubuntu -type f -name deploy.sh -print -quit)"'
+
       - name: Execute Deployment Script on EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \            
             'bash /home/ubuntu/src/py-fastapi-homework-5-ec2-deploy-task/commands/deploy.sh'
-
-
-
