@@ -39,13 +39,18 @@ jobs:
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'pwd && find . | grep deploy.sh'
 
-      - name: Find and save deploy.sh path
+      - name: Execute saved deploy.sh
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
-            DEPLOY_PATH=$(find /home/ubuntu -type f -name deploy.sh -print -quit)
-            echo "Found path: $DEPLOY_PATH"
-            echo "$DEPLOY_PATH" > /home/ubuntu/deploy_path.txt
-          '   
+            if [ -f /home/ubuntu/deploy_path.txt ]; then
+              SCRIPT=$(cat /home/ubuntu/deploy_path.txt)
+              echo "Executing $SCRIPT"
+              bash "$SCRIPT"
+            else
+              echo "deploy_path.txt not found!"
+              exit 1
+            fi
+          '          
 
       - name: Execute Deployment Script on EC2
         run: |
