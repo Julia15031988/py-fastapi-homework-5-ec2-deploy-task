@@ -1921,7 +1921,7 @@ jobs:
 
 Let's break down the YAML configuration to understand each part and its purpose.
 
-##### 1. `name: Deploy to AWS EC2`666
+##### 1. `name: Deploy to AWS EC2`66677777
 
 - **Purpose**: Assigns a name to the workflow, making it easily identifiable in the GitHub Actions interface.
 
