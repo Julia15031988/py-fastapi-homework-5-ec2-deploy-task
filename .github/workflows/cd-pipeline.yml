@@ -37,7 +37,7 @@ jobs:
 
       - name: check directory
         run: |
-          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'bash pwd && find . | grep deploy.sh'
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'pwd && find . | grep deploy.sh'
 
       - name: Execute Deployment Script on EC2
         run: |
