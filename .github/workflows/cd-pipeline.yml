@@ -29,7 +29,11 @@ jobs:
 
       - name: print working directory
         run: |
-          find .    
+          find .  
+
+      - name: check ssh access
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}       
 
       - name: Execute Deployment Script on EC2
         run: |
