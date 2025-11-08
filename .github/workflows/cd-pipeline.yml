@@ -39,6 +39,14 @@ jobs:
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'pwd && find . | grep deploy.sh'
 
+      - name: Find and save deploy.sh path
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+            DEPLOY_PATH=$(find /home/ubuntu -type f -name deploy.sh -print -quit)
+            echo "Found path: $DEPLOY_PATH"
+            echo "$DEPLOY_PATH" > /home/ubuntu/deploy_path.txt
+          '   
+
       - name: Execute Deployment Script on EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \            
@@ -46,4 +54,3 @@ jobs:
              SCRIPT_PATH="$BASE_DIR/src/py-fastapi-homework-5-ec2-deploy-task/commands/deploy.sh
              echo "Running: $SCRIPT_PATH"
              bash "$SCRIPT_PATH"'
-         
